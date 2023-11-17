@@ -1,0 +1,9 @@
+# ignore all node modules
+node_modules
+.next
+.idea
+/project_code/package-lock.json
+/project_code/package.json
+
+# 项目排除路径
+/project_code/tailwind.config.js

@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String           @unique
+  password       String
+  courses        Course[]         @relation(fields: [courseId], references: [id])
+  courseId       String[]         @db.ObjectId
+  profile        StudentProfile?
+  register       RegisterCourse[]
+  notification   Notification[]   @relation(fields: [notificationId], references: [id])
+  notificationId String[]         @db.ObjectId
+  Conversation   Conversation[]
+}
+
+model Tutor {
+  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String              @unique
+  password       String
+  courses        Course[]            @relation(fields: [courseId], references: [id])
+  courseId       String[]            @db.ObjectId
+  profile        TutorProfile?
+  notification   Notification[]      @relation(fields: [notificationId], references: [id])
+  notificationId String[]            @db.ObjectId
+  Conversation   Conversation[]
+}
+
+model SiteAdmin {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+}
+
+model TutorAdmin {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+}
+
+model Course {
+  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String?
+  tags           String[]
+  comments       String[]
+  thumbnail      String?
+  students       Student[]           @relation(fields: [studentId], references: [id])
+  studentId      String[]            @db.ObjectId
+  tutors         Tutor[]             @relation(fields: [tutorId], references: [id])
+  tutorId        String[]            @db.ObjectId
+  price          Int
+  register       RegisterCourse[]
+  status         String?
+  rate           String[]
+  score          String?
+}
+
+
+model StudentProfile {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  thumbnail      String?
+  email          String
+  username       String
+  phone          String?
+  address        String?
+  timeZone       String?
+  biography      String?
+  accountBalance Int
+  student        Student @relation(fields: [studentId], references: [id])
+  studentId      String  @unique @db.ObjectId
+}
+
+model TutorProfile {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  thumbnail         String?
+  email             String  @unique
+  username          String
+  phone             String?
+  address           String?
+  timeZone          String?
+  professionalBio   String?
+  accountBalance    Int     @default(10)
+  experienceSummary String?
+  courseCanTeach    String?
+  tutor             Tutor   @relation(fields: [tutorId], references: [id])
+  tutorId           String  @unique @db.ObjectId
+}
+
+model TutorApplication {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  tutorId     String?
+  name        String?
+  email       String?
+  courseId    String?
+  courseName  String?
+  date        DateTime @default(now())
+  description String?
+  status      String?
+  startTime   String?
+  endTime     String?
+}
+
+model Appointment {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  courseId        String? @db.ObjectId
+  courseName      String?
+  tutorId         String? @db.ObjectId
+  tutorName       String?
+  tutorEmail      String?
+  studentId       String? @db.ObjectId
+  studentName     String?
+  studentEmail    String?
+  duration        Int     @default(1)
+  date            String?
+  startTime       String?
+  endTime         String?
+  appointmentDate String?
+}
+
+model RegisterCourse {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  date      DateTime
+  status    String
+}
+
+model Identity {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  email    String   @unique
+  userType UserType
+}
+
+enum UserType {
+  Student
+  Tutor
+  SiteAdmin
+  TutorAdmin
+}
+
+model Notification {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  students  Student[] @relation(fields: [studentId], references: [id])
+  studentId String[]  @db.ObjectId
+  tutors    Tutor[]   @relation(fields: [tutorId], references: [id])
+  tutorId   String[]  @db.ObjectId
+}
+
+model Message {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  content        String
+  userId         String
+  createdAt      DateTime      @default(now())
+  Conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  conversationId String
+}
+
+model Conversation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String
+  tutor    Tutor     @relation(fields: [tutorId], references: [id])
+  tutorId  String
+  Messages Message[]
+}
