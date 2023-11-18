@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -22,15 +23,15 @@ model Student {
 }
 
 model Tutor {
-  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
   name           String
-  email          String              @unique
+  email          String         @unique
   password       String
-  courses        Course[]            @relation(fields: [courseId], references: [id])
-  courseId       String[]            @db.ObjectId
+  courses        Course[]       @relation(fields: [courseId], references: [id])
+  courseId       String[]       @db.ObjectId
   profile        TutorProfile?
-  notification   Notification[]      @relation(fields: [notificationId], references: [id])
-  notificationId String[]            @db.ObjectId
+  notification   Notification[] @relation(fields: [notificationId], references: [id])
+  notificationId String[]       @db.ObjectId
   Conversation   Conversation[]
 }
 
@@ -49,23 +50,22 @@ model TutorAdmin {
 }
 
 model Course {
-  id             String              @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
-  description    String?
-  tags           String[]
-  comments       String[]
-  thumbnail      String?
-  students       Student[]           @relation(fields: [studentId], references: [id])
-  studentId      String[]            @db.ObjectId
-  tutors         Tutor[]             @relation(fields: [tutorId], references: [id])
-  tutorId        String[]            @db.ObjectId
-  price          Int
-  register       RegisterCourse[]
-  status         String?
-  rate           String[]
-  score          String?
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  tags        String[]
+  comments    String[]
+  thumbnail   String?
+  students    Student[]        @relation(fields: [studentId], references: [id])
+  studentId   String[]         @db.ObjectId
+  tutors      Tutor[]          @relation(fields: [tutorId], references: [id])
+  tutorId     String[]         @db.ObjectId
+  price       Int
+  register    RegisterCourse[]
+  status      String?
+  rate        String[]
+  score       String?
 }
-
 
 model StudentProfile {
   id             String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -170,10 +170,10 @@ model Message {
 }
 
 model Conversation {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  student   Student @relation(fields: [studentId], references: [id])
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  student   Student   @relation(fields: [studentId], references: [id])
   studentId String
-  tutor    Tutor     @relation(fields: [tutorId], references: [id])
-  tutorId  String
-  Messages Message[]
+  tutor     Tutor     @relation(fields: [tutorId], references: [id])
+  tutorId   String
+  Messages  Message[]
 }
