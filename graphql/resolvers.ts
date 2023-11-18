@@ -624,6 +624,7 @@ export const resolvers = {
                 }
 
                 // Begin a transaction
+                // @ts-ignore
                 const transaction = await context.prisma.$transaction(async (prisma) => {
                     // Remove the student from all courses
                     const courses = await prisma.course.findMany({
