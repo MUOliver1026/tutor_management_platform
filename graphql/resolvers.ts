@@ -636,6 +636,7 @@ export const resolvers = {
                     });
 
                     for (const course of courses) {
+                        // @ts-ignore
                         const updatedStudentIds = course.studentId.filter(studentId => studentId !== args.id);
                         await prisma.course.update({
                             where: {
