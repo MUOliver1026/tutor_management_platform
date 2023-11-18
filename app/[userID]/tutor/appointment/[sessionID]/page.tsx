@@ -7,7 +7,7 @@ import {Separator} from "@/components/ui/separator";
 
 const TutorAppointment = () => {
     const pathname = usePathname();
-    const dashboardUrl = pathname?.replace(/\/appointment\/[^/]+/, "/dashboard");
+    const dashboardUrl = pathname?.replace(/\/appointment\/[^/]+/, "/dashboard") || "";
     return (
         <main className="mt-[5rem] space-y-6">
             <nav className="flex ml-[10%]" aria-label="Breadcrumb">
