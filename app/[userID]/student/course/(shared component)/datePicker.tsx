@@ -13,7 +13,7 @@ import {FC} from "react";
 
 interface DatePickerProps {
     selectedDate: Date,
-    onDateChange: (date:Date) => void
+    onDateChange: (date:Date | undefined) => void
 }
 
 const DatePicker:FC<DatePickerProps> = ({selectedDate, onDateChange}) => {

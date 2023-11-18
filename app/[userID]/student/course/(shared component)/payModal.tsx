@@ -102,7 +102,15 @@ const PayModal:FC<PayModalProps> = ({}) => {
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                    <DatePicker selectedDate={selectedDate} onDateChange={setSelectedDate}/>
+                    <DatePicker
+                        selectedDate={selectedDate}
+                        onDateChange={(newDate) => {
+                            // Ensure that newDate is not undefined before calling setSelectedDate
+                            if (newDate) {
+                                setSelectedDate(newDate);
+                            }
+                        }}
+                    />
                     <Select onValueChange={setAvailTime}>
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select an available time" />

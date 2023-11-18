@@ -131,7 +131,7 @@ export function StudentProfileUpdateForm() {
                                         <AvatarImage src={ProfileData?.getStudentProfile?.thumbnail || "/default-user.png"} alt="avatar" />
                                         <AvatarFallback>Avatar</AvatarFallback>
                                     </Avatar>
-                                    <FileUpload endpoint={"profileImage"} value={field.value} onChange={field.onChange}/>
+                                    <FileUpload endpoint={"profileImage"} value={field.value || ""} onChange={field.onChange}/>
                                 </div>
                             </FormControl>
                             <FormDescription>

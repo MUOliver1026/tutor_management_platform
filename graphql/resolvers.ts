@@ -717,6 +717,7 @@ export const resolvers = {
                     courseId: args.courseId,
                     courseName: args.courseName,
                     description: args.description,
+                    // @ts-ignore
                     appointmentDate: args.appointmentDate,
                     startTime: args.startTime,
                     endTime: args.endTime,

@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const renderContent = () => {
     if (isTutorPage || isStudentPage) {
-      return <UserNav userName={userName} userEmail={userEmail} />;
+      return <UserNav />;
     }
   };
 

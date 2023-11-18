@@ -55,6 +55,7 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
+        // @ts-ignore
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       keyframes: {
